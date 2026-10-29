@@ -179,6 +179,20 @@ describe "rspec-conductor executable" do
         expect(File.exist?(".example_statuses")).to be true
         expect(File.readlines(".example_statuses").detect { |line| line.include?('passed') }).not_to be_nil
       end
+    },
+    {
+      name: "example status persistence path from rspec config",
+      specs: {
+        "spec_helper.rb" => 'RSpec.configure { |c| c.example_status_persistence_file_path = ".example_statuses" }',
+        "a_spec.rb" => "RSpec.describe('persistence from config') {\n it('works') { expect(true).to be(true) }\n }",
+      },
+      args: ["--postfork-require", "spec_helper.rb"],
+      expect_exit: 0,
+      expect_output: "1 passed, 0 failed, 0 pending",
+      expect_proc: proc do
+        expect(File.exist?(".example_statuses")).to be true
+        expect(File.readlines(".example_statuses").detect { |line| line.include?('passed') }).not_to be_nil
+      end
     }
   ].freeze
 

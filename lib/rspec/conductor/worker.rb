@@ -17,6 +17,7 @@ module RSpec
         setup_signal_handlers
         setup_load_path
         require_postfork_preloads
+        report_configuration
 
         loop do
           debug "Waiting for message"
@@ -102,6 +103,13 @@ module RSpec
 
         debug "RSpec initialized, running before(:suite) hooks"
         RSpec.configuration.__run_before_suite_hooks
+      end
+
+      def report_configuration
+        @socket.send_message(
+          type: :worker_configured,
+          example_status_persistence_file_path: RSpec.configuration.example_status_persistence_file_path
+        )
       end
 
       def run_spec(file)

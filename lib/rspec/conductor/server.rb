@@ -161,6 +161,8 @@ module RSpec
         debug "Worker #{worker_process.number}: #{message[:type]}"
 
         case message[:type].to_sym
+        when :worker_configured
+          @example_status_persistence_path ||= message[:example_status_persistence_file_path]
         when :example_passed
           @suite_run.example_passed(message)
         when :example_failed

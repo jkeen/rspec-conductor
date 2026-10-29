@@ -1,5 +1,7 @@
 ## [1.0.13] - TBD
 
+- Persist example statuses to the path set in RSpec's config.example_status_persistence_file_path when neither --example-status-persistence-path nor RSPEC_CONDUCTOR_EXAMPLE_STATUS_PERSISTENCE_PATH is given, so rspec --only-failures picks up a conductor run with no extra setup
+
 ## [1.0.12] - 2026-09-12
 
 - Add --example-status-persistence option to mimic rspec example status persistence runner config and to support --only-failures on repeat runs

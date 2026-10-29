@@ -75,6 +75,7 @@ describe RSpec::Conductor::Worker do
       wait_for_worker(pid)
 
       expect(messages).to match([
+        hash_including(type: "worker_configured"),
         hash_including(type: "example_passed", description: "Test passes", file: spec_file.path),
         hash_including(type: "spec_complete", file: spec_file.path)
       ])
@@ -102,6 +103,7 @@ describe RSpec::Conductor::Worker do
       wait_for_worker(pid)
 
       expect(messages).to match([
+        hash_including(type: "worker_configured"),
         hash_including(
           type: "example_failed",
           description: "Failing fails",
